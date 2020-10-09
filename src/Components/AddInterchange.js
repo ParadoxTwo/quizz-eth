@@ -1,4 +1,5 @@
 import React from 'react';
+import './popupStyles.css';
 import {
     View,
     Text,
@@ -53,6 +54,7 @@ class AddInterchange extends React.Component{
         var {username,question,answer,options,tags,votes,timeDifficulty} = this.state;
         var payload = {username,question,answer,options,tags,votes,timeDifficulty}
         const onSuccess = result =>{
+            this.props.refresh();
             console.log(result);
         }
         const onFailure = err =>{
@@ -68,111 +70,106 @@ class AddInterchange extends React.Component{
     }
     render(){
         return(
-            <View>
-                <p>{this.state.username}, add a question and answer:</p>
-                <Text>Question:</Text>
-                <TextInput
-                    value={this.state.question}
-                    maxLength={256}
-                    placeholder="Type your question"
-                    autoCapitalize="none"
-                    autoCorrect={true}
-                    returnKeyType="next"
-                    onSubmitEditing={event =>
-                        this.passwordInput.wrappedInstance.focus()
-                    }
-                    onChangeText={this.onQuestionChange}
-                    underlineColorAndroid="transparent"
-                    placeholderTextColor="#999"
-                />
-                <br/>
-                <Text>Answer:</Text>
-                <TextInput
-                    value={this.state.answer}
-                    maxLength={256}
-                    placeholder="Type the correct answer"
-                    autoCapitalize="none"
-                    autoCorrect={true}
-                    returnKeyType="next"
-                    onSubmitEditing={event =>
-                        this.passwordInput.wrappedInstance.focus()
-                    }
-                    onChangeText={this.onAnswerChange}
-                    underlineColorAndroid="transparent"
-                    placeholderTextColor="#999"
-                />
-                <br/>
-                <Text>Options:</Text><br/>
-                <Text id="options">
-                    <ul>
-                        {this.state.options.map((option,i)=><li key={i}>{option}</li>)}
-                    </ul>
-                </Text>
-                <br/>
-                <TextInput
-                    id = "option"
-                    maxLength={256}
-                    placeholder="Option other than answer"
-                    autoCapitalize="none"
-                    autoCorrect={true}
-                    returnKeyType="next"
-                    onChangeText={this.onOptionChange}
-                    onSubmitEditing={event =>
-                        this.passwordInput.wrappedInstance.focus()
-                    }
-                    underlineColorAndroid="transparent"
-                    placeholderTextColor="#999"
-                />
-                <TouchableOpacity onPress={this.onPressAddOption.bind(this)}>
-                    <Text>Add Option</Text>
-                </TouchableOpacity>
-                <br/>
-                <Text>Tags:</Text><br/>
-                <Text id="tags">
-                    <ul>
-                        {this.state.tags.map((tag,i)=><li key={i}>{tag}</li>)}
-                    </ul>
-                </Text>
-                <br/>
-                <TextInput
-                    id = "tag"
-                    maxLength={256}
-                    placeholder="Tags (keywords or topics)"
-                    autoCapitalize="none"
-                    autoCorrect={false}
-                    returnKeyType="next"
-                    onChangeText={this.onTagChange}
-                    onSubmitEditing={event =>
-                        this.passwordInput.wrappedInstance.focus()
-                    }
-                    underlineColorAndroid="transparent"
-                    placeholderTextColor="#999"
-                />
-                <TouchableOpacity onPress={this.onPressAddTag.bind(this)}>
-                    <Text>Add Tag</Text>
-                </TouchableOpacity>
-                <br/>
-                <TextInput
-                    id = "timeDifficulty"
-                    maxLength={256}
-                    placeholder="Tags (keywords or topics)"
-                    autoCapitalize="none"
-                    keyboardType="numeric"
-                    autoCorrect={false}
-                    returnKeyType="next"
-                    onSubmitEditing={event =>
-                        this.passwordInput.wrappedInstance.focus()
-                    }
-                    underlineColorAndroid="transparent"
-                    placeholderTextColor="#999"
-                />
-                <Button
-                    onPress={this.onPressAdd.bind(this)}
-                    title="Add"
-                    color="#841584"
-                    accessibilityLabel="Add the interchange"
-                />
-            </View>
+            <div>
+                {this.props.popup?<div className='popup'>
+                    <div className='popup_inner'>
+                        <button type="button" className="btn btn-info" onClick={this.props.closePopup}>X</button><br/><br/>
+                        <View>
+                            <p>{this.state.username}, add a question and answer:</p>
+                            <Text>Question:</Text>
+                            <TextInput
+                                value={this.state.question}
+                                maxLength={256}
+                                placeholder="Type your question"
+                                autoCapitalize="none"
+                                autoCorrect={true}
+                                returnKeyType="next"
+                                onSubmitEditing={event =>
+                                    this.passwordInput.wrappedInstance.focus()
+                                }
+                                onChangeText={this.onQuestionChange}
+                                underlineColorAndroid="transparent"
+                                placeholderTextColor="#999"
+                            />
+                            <Text>Answer:</Text>
+                            <TextInput
+                                value={this.state.answer}
+                                maxLength={256}
+                                placeholder="Type the correct answer"
+                                autoCapitalize="none"
+                                autoCorrect={true}
+                                returnKeyType="next"
+                                onSubmitEditing={event =>
+                                    this.passwordInput.wrappedInstance.focus()
+                                }
+                                onChangeText={this.onAnswerChange}
+                                underlineColorAndroid="transparent"
+                                placeholderTextColor="#999"
+                            />
+                            <Text>Options:</Text><br/>
+                            <Text id="options">
+                                <ul>
+                                    {this.state.options.map((option,i)=><li key={i}>{option}</li>)}
+                                </ul>
+                            </Text>
+                            <TextInput
+                                id = "option"
+                                maxLength={256}
+                                placeholder="Option other than answer"
+                                autoCapitalize="none"
+                                autoCorrect={true}
+                                returnKeyType="next"
+                                onChangeText={this.onOptionChange}
+                                onSubmitEditing={event =>
+                                    this.passwordInput.wrappedInstance.focus()
+                                }
+                                underlineColorAndroid="transparent"
+                                placeholderTextColor="#999"
+                            />
+                            <Button title="Add Option" color="#205050" onPress={this.onPressAddOption.bind(this)}/>
+                            <Text>Tags:</Text><br/>
+                            <Text id="tags">
+                                <ul>
+                                    {this.state.tags.map((tag,i)=><li key={i}>{tag}</li>)}
+                                </ul>
+                            </Text>
+                            <TextInput
+                                id = "tag"
+                                maxLength={256}
+                                placeholder="Tags (keywords or topics)"
+                                autoCapitalize="none"
+                                autoCorrect={false}
+                                returnKeyType="next"
+                                onChangeText={this.onTagChange}
+                                onSubmitEditing={event =>
+                                    this.passwordInput.wrappedInstance.focus()
+                                }
+                                underlineColorAndroid="transparent"
+                                placeholderTextColor="#999"
+                            />
+                            <Button title="Add Tag" color="#205050" onPress={this.onPressAddTag.bind(this)}/>
+                            <TextInput
+                                id = "timeDifficulty"
+                                maxLength={256}
+                                placeholder="Amount of time required to solve/answer"
+                                autoCapitalize="none"
+                                autoCorrect={false}
+                                textContentType="oneTimeCode"
+                                returnKeyType="next"
+                                onChangeText={this.onTimeChange}
+                                underlineColorAndroid="transparent"
+                                placeholderTextColor="#999"
+                            />
+                            <Button
+                                onPress={this.onPressAdd.bind(this)}
+                                title="Add"
+                                color="#841584"
+                                accessibilityLabel="Add the interchange"
+                            />
+                        </View>
+                    </div>
+                </div>:null}
+            </div>
         )
     }
 }
