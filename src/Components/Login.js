@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 // import Spinner from 'react-native-loading-spinner-overlay';
 import APIKit from '../APIKit'
+import SignUp from './SignUp'
 
 const setClientToken = token => {
     APIKit.interceptors.request.use(function(config) {
@@ -21,6 +22,7 @@ const initialState = {
   errors: {},
   isAuthorized: false,
   isLoading: false,
+  popup: false
 };
 
 class Login extends Component {
@@ -36,19 +38,21 @@ class Login extends Component {
     this.setState({password});
   };
 
+
   onPressLogin() {
-    const {username, password} = this.state;
-    const payload = {username, password};
-    console.log(payload);
+    const {username, password, address} = this.state;
 
     const onSuccess = ({data}) => {
       // Set JSON Web Token on success
       console.log(data)
-      if(data[0].password==password){
+      if(data[0].password==password&&data[0].address==this.props.accounts[0]){
         console.log("pass "+password)
         this.props.loginUser(username);
         setClientToken(data.token);
         this.setState({isLoading: false, isAuthorized: true});
+      }
+      else{
+          alert("Incorrect Username/pass/address")
       }
     };
 
@@ -60,9 +64,13 @@ class Login extends Component {
     // Show spinner when call is made
     this.setState({isLoading: true});
 
-    APIKit.get('/users/login/'+username, payload)
+    APIKit.get('/users/login/'+username)
       .then(onSuccess)
       .catch(onFailure);
+  }
+
+  onPressSignUp(){
+    this.setState({popup: true});
   }
 
   getNonFieldErrorMessage() {
@@ -105,7 +113,9 @@ class Login extends Component {
     const {isLoading} = this.state;
 
     return (
-      <View style={styles.containerStyle}>
+    <div>
+        {this.state.popup?<SignUp accounts = {this.props.accounts} closePopup={()=>this.setState({popup:false})} popup={this.state.popup}/>:null}
+        <View style={styles.containerStyle}>
         {/* <Spinner visible={isLoading} /> */}
 
         {!this.state.isAuthorized ? <View>
@@ -145,18 +155,34 @@ class Login extends Component {
             underlineColorAndroid="transparent"
             placeholderTextColor="#999"
           />
-
           {this.getErrorMessageByField('password')}
 
           {this.getNonFieldErrorMessage()}
-
+          <TextInput
+            style={styles.input}
+            value={this.props.accounts[0]}
+            maxLength={256}
+            autoCapitalize="none"
+            autoCorrect={false}
+            returnKeyType="next"
+            onSubmitEditing={event =>
+              this.passwordInput.wrappedInstance.focus()
+            }
+            editable={false}
+            underlineColorAndroid="transparent"
+            placeholderTextColor="#999"
+          />
           <TouchableOpacity
             style={styles.loginButton}
             onPress={this.onPressLogin.bind(this)}>
             <Text style={styles.loginButtonText}>LOGIN</Text>
           </TouchableOpacity>
+          <TouchableOpacity onPress={this.onPressSignUp.bind(this)}>
+              <Text>Sign Up</Text>
+          </TouchableOpacity>
         </View> : <View><Text>Successfully authorized!</Text></View>}
       </View>
+    </div>
     );
   }
 }
@@ -183,7 +209,6 @@ const styles = {
     alignItems: 'center',
   },
   containerStyle: {
-    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#f6f6f6',

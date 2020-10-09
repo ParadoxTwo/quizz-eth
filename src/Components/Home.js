@@ -2,11 +2,13 @@ import React from 'react';
 import AddInterchange from './AddInterchange';
 import ShowInterchanges from './ShowInterchanges';
 import APIKit from '../APIKit'
+
+
 class Home extends React.Component{
     state = {
         popup: false,
         interchanges: [],
-        loaded: false
+        loaded: false,
     }
     loadData(){
         APIKit.get('/interchange')

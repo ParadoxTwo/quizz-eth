@@ -15,6 +15,13 @@ const userSchema = new Schema({
         required: true,
         minlength: 8,
         trim: true
+    },
+    address: {
+        type: String,
+        required: true,
+        minlength: 3,
+        unique: true,
+        trim: true
     }
 },{
     timestamps: true
