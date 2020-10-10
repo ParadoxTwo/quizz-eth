@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { Component, Fragment } from 'react';
 import Login from './Components/Login';
-import Home from './Components/Home'
+import PersistentDrawerLeft from './Components/Drawer';
+import {BrowserRouter, Route} from 'react-router-dom'
 import './App.css';
 
 const Web3 = require('web3');
@@ -50,7 +51,12 @@ class App extends React.Component{
   render(){
     return (
       <div className="App">
-        {!this.state.loggedIn?<Login web3 = {this.state.web3} accounts = {this.state.accounts} loginUser = {this.login}/>:<Home web3 = {this.state.web3} accounts = {this.state.accounts} username={this.state.username}/>}
+        {!this.state.loggedIn?<Login web3 = {this.state.web3} accounts = {this.state.accounts} loginUser = {this.login}/>:
+          <BrowserRouter>
+            <Fragment>
+              <PersistentDrawerLeft web3 = {this.state.web3} accounts = {this.state.accounts} username={this.state.username}/>
+            </Fragment>
+          </BrowserRouter>}
       </div>
     );
   }

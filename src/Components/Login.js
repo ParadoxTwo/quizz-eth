@@ -57,8 +57,8 @@ class Login extends Component {
     };
 
     const onFailure = error => {
-      console.log(error && error.response);
-      this.setState({errors: error.response.data, isLoading: false});
+      console.log(error);
+      this.setState({isLoading: false});
     };
 
     // Show spinner when call is made
@@ -71,42 +71,6 @@ class Login extends Component {
 
   onPressSignUp(){
     this.setState({popup: true});
-  }
-
-  getNonFieldErrorMessage() {
-    // Return errors that are served in `non_field_errors`
-    let message = null;
-    const {errors} = this.state;
-    if (errors.non_field_errors) {
-      message = (
-        <View style={styles.errorMessageContainerStyle}>
-          {errors.non_field_errors.map(item => (
-            <Text style={styles.errorMessageTextStyle} key={item}>
-              {item}
-            </Text>
-          ))}
-        </View>
-      );
-    }
-    return message;
-  }
-
-  getErrorMessageByField(field) {
-    // Checks for error message in specified field
-    // Shows error message from backend
-    let message = null;
-    if (this.state.errors[field]) {
-      message = (
-        <View style={styles.errorMessageContainerStyle}>
-          {this.state.errors[field].map(item => (
-            <Text style={styles.errorMessageTextStyle} key={item}>
-              {item}
-            </Text>
-          ))}
-        </View>
-      );
-    }
-    return message;
   }
 
   render() {
@@ -134,9 +98,6 @@ class Login extends Component {
             underlineColorAndroid="transparent"
             placeholderTextColor="#999"
           />
-
-          {this.getErrorMessageByField('username')}
-
           <TextInput
             ref={node => {
               this.passwordInput = node;
@@ -155,9 +116,6 @@ class Login extends Component {
             underlineColorAndroid="transparent"
             placeholderTextColor="#999"
           />
-          {this.getErrorMessageByField('password')}
-
-          {this.getNonFieldErrorMessage()}
           <TextInput
             style={styles.input}
             value={this.props.accounts[0]}
