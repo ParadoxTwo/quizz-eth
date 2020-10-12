@@ -16,12 +16,15 @@ connection.once('open',()=>{
 
 const usersRouter = require('./routes/users');
 const interchangeRouter = require('./routes/interchange');
+const quizRouter = require('./routes/quiz')
 
 app.use(cors());
 app.use(express.json());
 
 app.use('/users', usersRouter);
 app.use('/interchange', interchangeRouter);
+app.use('/quiz', quizRouter)
+
 app.listen(port, ()=>{
     console.log(`Server is running on port: ${port}`)
 })

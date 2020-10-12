@@ -9,6 +9,8 @@ const interchangeSchema = new Schema({
     options: { type: [String], required: true},
     tags: {type: [String], required: false},
     votes: {type: Number, required: true},
+    upvoters: {type: [String], required: false},
+    downvoters: {type: [String], required: false},
     timeDifficulty: {type: Number, required: true},
     date: { type: Date, required: true }
 },{

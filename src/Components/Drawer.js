@@ -148,8 +148,8 @@ export default function PersistentDrawerLeft(props) {
         })}
       >
         <div className={classes.drawerHeader} />
-        <Route exact path='/' render={()=><Home web3 = {props.web3} accounts = {props.accounts} username={props.username}/>}></Route>
-        <Route exact path='/quiz' render={()=><Quiz web3 = {props.web3} accounts = {props.accounts} username={props.username}/>}></Route>
+        <Route exact path='/' render={()=><Home web3 = {props.web3} accounts = {props.accounts} reputation={props.reputation} username={props.username}/>}></Route>
+        <Route exact path='/quiz' render={()=><Quiz web3 = {props.web3} accounts = {props.accounts} reputation={props.reputation} username={props.username}/>}></Route>
       </main>
     </div>
   );

@@ -11,14 +11,14 @@ class App extends React.Component{
   state = {
     loggedIn: false,
     username: "",
+    reputation: 0,
     accounts: [],
     balance: 0,
     web3: null,
 
   }
-  login = (username)=>{
-    this.setState({loggedIn:true})
-    this.setState({username})
+  login = (username, reputation)=>{
+    this.setState({username, reputation,loggedIn:true})
     alert("Logged In")
   }
   async loadWeb3(){
@@ -54,7 +54,7 @@ class App extends React.Component{
         {!this.state.loggedIn?<Login web3 = {this.state.web3} accounts = {this.state.accounts} loginUser = {this.login}/>:
           <BrowserRouter>
             <Fragment>
-              <PersistentDrawerLeft web3 = {this.state.web3} accounts = {this.state.accounts} username={this.state.username}/>
+              <PersistentDrawerLeft web3 = {this.state.web3} accounts = {this.state.accounts} reputation={this.state.reputation} username={this.state.username}/>
             </Fragment>
           </BrowserRouter>}
       </div>

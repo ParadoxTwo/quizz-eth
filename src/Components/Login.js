@@ -18,6 +18,7 @@ const setClientToken = token => {
 
 const initialState = {
   username: '',
+  reputation: 0,
   password: '',
   errors: {},
   isAuthorized: false,
@@ -40,16 +41,16 @@ class Login extends Component {
 
 
   onPressLogin() {
-    const {username, password, address} = this.state;
+    const {username, password, reputation} = this.state;
 
     const onSuccess = ({data}) => {
       // Set JSON Web Token on success
       console.log(data)
       if(data[0].password==password&&data[0].address==this.props.accounts[0]){
         console.log("pass "+password)
-        this.props.loginUser(username);
+        this.props.loginUser(username, data[0].reputation);
         setClientToken(data.token);
-        this.setState({isLoading: false, isAuthorized: true});
+        this.setState({isLoading: false, isAuthorized: true, reputation: data[0].reputation});
       }
       else{
           alert("Incorrect Username/pass/address")

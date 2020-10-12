@@ -22,6 +22,11 @@ const userSchema = new Schema({
         minlength: 3,
         unique: true,
         trim: true
+    },
+    reputation: {
+        type: Number, 
+        required: true,
+        min: 0
     }
 },{
     timestamps: true

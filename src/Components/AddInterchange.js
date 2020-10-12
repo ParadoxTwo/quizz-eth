@@ -8,7 +8,16 @@ import {
     TextInput
 } from 'react-native';
 import APIKit from '../APIKit';
-
+const initialState={
+    question: "",
+    answer: "",
+    options: [],
+    tags: [],
+    votes: 0,
+    timeDifficulty: 0,
+    currentOption: "",
+    currentTag: ""
+}
 class AddInterchange extends React.Component{
     state = {
         username: this.props.username,
@@ -55,6 +64,7 @@ class AddInterchange extends React.Component{
         var payload = {username,question,answer,options,tags,votes,timeDifficulty}
         const onSuccess = result =>{
             this.props.refresh();
+            this.setState(initialState)
             console.log(result);
         }
         const onFailure = err =>{
