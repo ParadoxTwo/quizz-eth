@@ -6,7 +6,6 @@ var HDWalletProvider = require("truffle-hdwallet-provider");
 var mnemonic = "under detect verify bean lobster weapon jelly cost hungry evidence tiger parade";
 // For localhost
 const web3 = new Web3(new HDWalletProvider(mnemonic, "https://rinkeby.infura.io/v3/cbfff3438831426484f5b7bf334709b2"));
-const contractAddress = "0x10904A0044fcf537e1A647b9D3732467E0Fa6551";
 let QuizMaster;
 
 fs.readFile('./abis/QuizMaster.json','utf-8',(err,jsonString)=>{

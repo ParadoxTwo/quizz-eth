@@ -50,9 +50,7 @@ class SignUp extends React.Component{
                 {this.props.popup?<div className='popup'>
                     <div className='popup_inner'>
                         <button type="button" className="btn btn-info" onClick={this.props.closePopup}>X</button><br/><br/>
-                        This is the signup page!
-                        Loads metamask address into the relevent text box!
-                        Show username, password, confirm password and address!
+                        Sign up here!
                         <View style={styles.containerStyle}>
                             <TextInput
                                 style={styles.input}
